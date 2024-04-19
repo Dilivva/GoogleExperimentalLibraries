@@ -39,13 +39,15 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(projects.library)
+            implementation(libs.qrcode)
+            implementation(projects.places)
+            //implementation("com.dilivva.places:scanner:0.0.1")
         }
     }
 }
 
 android {
-    namespace = "com.dilivva.thermal"
+    namespace = "com.dilivva.googleex"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -53,7 +55,7 @@ android {
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        applicationId = "com.dilivva.thermal"
+        applicationId = "com.dilivva.googleex"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1

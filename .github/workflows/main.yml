@@ -22,7 +22,7 @@ jobs:
 
       - name: Publish to Sonatype
         run:  >
-          ./gradlew :library:publishAllPublicationsToMavenCentral
+          ./gradlew :places:publishAllPublicationsToMavenCentral
           -PmavenCentralUsername=${{ secrets.MAVEN_USERNAME }}
           -PmavenCentralPassword=${{ secrets.MAVEN_PASSWORD }}
           -PsigningInMemoryKey=${{ secrets.SIGNING_KEY }}

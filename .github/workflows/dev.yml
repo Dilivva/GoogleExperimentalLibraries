@@ -5,7 +5,7 @@ on:
     branches: ["development"]
 
 jobs:
-  release:
+  releaseGooglePlaces:
     if: ${{ github.event_name != 'pull_request' }}
     runs-on: macos-latest
     steps:
@@ -20,9 +20,9 @@ jobs:
       - name: Setup gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Publish to Sonatype
+      - name: Publish Places to Sonatype
         run:  >
-          ./gradlew :library:publishAllPublicationsToMavenCentral 
+          ./gradlew :places:publishAllPublicationsToMavenCentral 
           -Penv=dev
           -PmavenCentralUsername=${{ secrets.MAVEN_USERNAME }}
           -PmavenCentralPassword=${{ secrets.MAVEN_PASSWORD }}
