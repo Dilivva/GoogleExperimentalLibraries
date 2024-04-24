@@ -32,6 +32,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
@@ -51,7 +52,7 @@ internal actual fun initializeWithKey(key: String){
 actual fun rememberGooglePlaces(config: PlacesConfig, onResult: (PlaceResult) -> Unit): GooglePlaces{
     val componentActivity = LocalContext.current as ComponentActivity
     applicationContext = componentActivity.applicationContext
-    return AndroidGooglePlaces(config, onResult, componentActivity)
+    return remember(config,onResult,componentActivity) { AndroidGooglePlaces(config, onResult, componentActivity) }
 }
 
 internal fun <I, O> ComponentActivity.registerActivityResultLauncher(

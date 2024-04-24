@@ -35,14 +35,16 @@ import Places.GMSPlaceFieldPlusCode
 import Places.GMSPlacesClient
 import Places.GMSPlusCode
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.interop.LocalUIViewController
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.useContents
 import platform.CoreLocation.CLLocationCoordinate2D
 import platform.Foundation.NSError
-import platform.UIKit.UIApplication
-import platform.UIKit.UIWindow
+import platform.UIKit.UIViewController
 import platform.darwin.NSObject
+
 
 @OptIn(ExperimentalForeignApi::class)
 internal actual fun initializeWithKey(key: String){
@@ -51,28 +53,27 @@ internal actual fun initializeWithKey(key: String){
 
 @Composable
 actual fun rememberGooglePlaces(config: PlacesConfig, onResult: (PlaceResult) -> Unit): GooglePlaces{
-    return IosGooglePlaces(config, onResult)
+    val uiController = LocalUIViewController.current
+    return remember(config, onResult, uiController) { IosGooglePlaces(uiController, config, onResult) }
 }
 
 @OptIn(ExperimentalForeignApi::class)
 class IosGooglePlaces(
+    private val currentViewController: UIViewController,
     private val config: PlacesConfig,
     private val onResult: (PlaceResult) -> Unit
 ): GooglePlaces{
 
     private lateinit var placesController: GMSAutocompleteViewController
-    private val window = UIApplication.sharedApplication.windows.last() as? UIWindow
-    private val currentViewController = window?.rootViewController
     private val delegate = PlacesDelegate{
         onResult(it)
-        currentViewController?.dismissViewControllerAnimated(true, null)
+        currentViewController.dismissViewControllerAnimated(true, null)
     }
 
     override fun launch() {
         setUp()
         if (::placesController.isInitialized){
-            window?.makeKeyAndVisible()
-            currentViewController?.presentViewController(placesController,animated = true, completion = null)
+            currentViewController.presentViewController(placesController,animated = true, completion = null)
         }
     }
 
@@ -83,7 +84,6 @@ class IosGooglePlaces(
         placesController.placeFields = mapFields()
         placesController.autocompleteFilter = filter
         if (placesController.delegate == null){
-            println("Delegate is null")
             placesController.setDelegate(delegate)
         }
     }
