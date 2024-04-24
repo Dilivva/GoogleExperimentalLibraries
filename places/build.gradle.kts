@@ -60,6 +60,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines)
             implementation(compose.runtime)
+            implementation(compose.ui)
         }
         androidMain.dependencies {
             implementation(libs.google.places)
@@ -78,9 +79,9 @@ android {
 @Suppress("UnstableApiUsage")
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.S01, true)
-    val versionTxt = "0.0.1"
+    val versionTxt = "0.0.2"
     val isDev = findProperty("env")?.equals("dev") ?: false
-    val version = if (isDev) versionTxt.plus("-SNAPSHOT") else versionTxt
+    val version = if (isDev) "0.0.1-SNAPSHOT" else versionTxt
 
 
     coordinates("com.dilivva", "google-places", version)
