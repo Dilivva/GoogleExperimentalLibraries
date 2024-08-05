@@ -23,7 +23,8 @@ This lets you implement google sign-in from your compose multiplatform code. Cur
    }
    ```
 
-3. Add [-ObjC linker](https://developer.apple.com/library/content/qa/qa1490/_index.html) for iOS on Xcode
+3. ## Important!!
+  Add [-ObjC linker](https://developer.apple.com/library/content/qa/qa1490/_index.html) for iOS on Xcode
 
 4. [Download GoogleSignIn.bundle](https://github.com/Dilivva/GoogleExperimentalLibraries/tree/master/signin/libs/GoogleSignIn.bundle.zip) and 
 [Download GTMSessionFetcher_Core_Privacy.bundle](https://github.com/Dilivva/GoogleExperimentalLibraries/tree/master/signin/libs/GTMSessionFetcher_Core_Privacy.bundle.zip) resources,
@@ -56,7 +57,7 @@ fun LoginScreen(){
       onClick = { signIn.signIn() },
       enabled = true
    ) {
-      Text("Search place")
+      Text("Sign In")
    }
    
    //Get previous signed in user, 
@@ -66,3 +67,4 @@ fun LoginScreen(){
 }
 ```
 
+### Issues are welcome too !
