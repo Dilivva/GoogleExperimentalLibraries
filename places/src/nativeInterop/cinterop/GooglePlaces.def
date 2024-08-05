@@ -1,6 +1,7 @@
 language = Objective-C
 modules = GooglePlaces
 package = Places
+
 staticLibraries = GooglePlaces.a
 libraryPaths.ios_x64 = ../places/libs/GooglePlaces.xcframework/ios-arm64_x86_64-simulator
 libraryPaths.ios_arm64 = ../places/libs/GooglePlaces.xcframework/ios-arm64

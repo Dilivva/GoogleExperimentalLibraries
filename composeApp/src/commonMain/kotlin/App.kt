@@ -23,12 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dilivva.places.GooglePlace
-import com.dilivva.places.Place
-import com.dilivva.places.PlaceResult
-import com.dilivva.places.PlacesConfig
-import com.dilivva.places.PlacesFields
-import com.dilivva.places.rememberGooglePlaces
+import com.dilivva.signin.GoogleSignInResult
+import com.dilivva.signin.GoogleSignInUser
+import com.dilivva.signin.rememberGoogleSignIn
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -42,36 +39,37 @@ fun App() {
         var showContent by remember { mutableStateOf(false) }
         val scope = rememberCoroutineScope()
         var error  by remember { mutableStateOf<String?>(null) }
-        var place  by remember { mutableStateOf<Place?>(null) }
-        var showQR  by remember { mutableStateOf(false) }
-        val googlePlaces = rememberGooglePlaces(
-            config = PlacesConfig(fields = PlacesFields.entries.toList(), countries = listOf("ng")),
-            onResult = {
-                when(it){
-                    is PlaceResult.Cancelled -> println("Closed")
-                    is PlaceResult.Failure -> error = it.error
-                    is PlaceResult.Success -> place = it.place
-                }
-            })
+        var googleSignInUser by remember { mutableStateOf<GoogleSignInUser?>(null) }
+        val signIn = rememberGoogleSignIn {
+            when(it){
+                is GoogleSignInResult.Error -> println("GoogleSignInError: ${it.message}")
+                is GoogleSignInUser -> { println("User: $it"); googleSignInUser = it }
+                GoogleSignInResult.NoResult -> println("No result")
+            }
+        }
+
 
         LaunchedEffect(Unit){
-            GooglePlace.initialize("key")
             if (!showContent) showContent = true
         }
 
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             TopAppBar(modifier = Modifier.fillMaxWidth(), title = { Text("Google Experiments") })
-            place?.let {
-                PlaceItem(it)
+            googleSignInUser?.let {
+                UserItem(it)
             }
 
-
-
             Button(
-                onClick = { googlePlaces.launch() },
+                onClick = { signIn.signIn() },
                 enabled = true
             ) {
-                Text("Search place")
+                Text("Sign In")
+            }
+            Button(
+                onClick = { signIn.restorePreviousSignIn() },
+                enabled = true
+            ) {
+                Text("Restore previous signin")
             }
         }
 
@@ -106,8 +104,8 @@ fun ShowDialog(
 }
 
 @Composable
-fun PlaceItem(
-    place: Place
+fun UserItem(
+    user: GoogleSignInUser
 ){
     Box(
         modifier = Modifier.fillMaxWidth().padding(20.dp)
@@ -116,23 +114,23 @@ fun PlaceItem(
     ){
         Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(15.dp)){
             Text(
-                text = "Name: ${place.name}",
+                text = "Name: ${user.name}",
                 fontSize = 14.sp,
                 color = Color.Red
             )
             Text(
-                text = "Address: ${place.formattedAddress}",
+                text = "Email: ${user.email}",
                 fontSize = 14.sp,
                 color = Color.Blue
             )
 
             Text(
-                text = "PlaceID: ${place.placeId}",
+                text = "TokenID: ${user.idToken.take(10)}",
                 fontSize = 14.sp,
                 color = Color.Blue
             )
             Text(
-                text = "Coordinates: ${place.coordinates.toString()}",
+                text = "Url: ${user.profilePictureUri}",
                 fontSize = 14.sp,
                 color = Color.Blue
             )
@@ -141,4 +139,39 @@ fun PlaceItem(
     }
 }
 
+//@Composable
+//fun PlaceItem(
+//    place: Place
+//){
+//    Box(
+//        modifier = Modifier.fillMaxWidth().padding(20.dp)
+//            .background(Color.LightGray.copy(alpha = 0.2f), RoundedCornerShape(15.dp))
+//            .padding(8.dp)
+//    ){
+//        Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(15.dp)){
+//            Text(
+//                text = "Name: ${place.name}",
+//                fontSize = 14.sp,
+//                color = Color.Red
+//            )
+//            Text(
+//                text = "Address: ${place.formattedAddress}",
+//                fontSize = 14.sp,
+//                color = Color.Blue
+//            )
+//
+//            Text(
+//                text = "PlaceID: ${place.placeId}",
+//                fontSize = 14.sp,
+//                color = Color.Blue
+//            )
+//            Text(
+//                text = "Coordinates: ${place.coordinates.toString()}",
+//                fontSize = 14.sp,
+//                color = Color.Blue
+//            )
+//
+//        }
+//    }
+//}
 

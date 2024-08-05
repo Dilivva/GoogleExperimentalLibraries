@@ -20,7 +20,10 @@ This lets you launch the google places widget from your compose multiplatform co
    }
    ```
 
-2. **Explore the API:**
+2. [Download](https://github.com/Dilivva/GoogleExperimentalLibraries/tree/master/places/libs/GooglePlaces.bundle.zip) GooglePlaces resources, 
+extract and move GooglePlaces.bundle to Xcode.
+
+3. **Explore the API:**
 
 ## Usage Example
 

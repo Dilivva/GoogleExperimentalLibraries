@@ -47,6 +47,7 @@ kotlin {
         val defFile = "src/nativeInterop/cinterop/GooglePlaces.def"
         val path = "$projectDir/libs/GooglePlaces.xcframework/ios-arm64_x86_64-simulator"
 
+
         val options = listOf("-framework", "GooglePlaces", "-F$path")
         it.compilations.getByName("main") {
             val Places by cinterops.creating {
@@ -61,6 +62,9 @@ kotlin {
             implementation(libs.kotlinx.coroutines)
             implementation(compose.runtime)
             implementation(compose.ui)
+        }
+        iosMain.dependencies {
+            implementation(compose.components.resources)
         }
         androidMain.dependencies {
             implementation(libs.google.places)
@@ -79,9 +83,9 @@ android {
 @Suppress("UnstableApiUsage")
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.S01, true)
-    val versionTxt = "0.0.2"
+    val versionTxt = "1.0.0"
     val isDev = findProperty("env")?.equals("dev") ?: false
-    val version = if (isDev) "0.0.1-SNAPSHOT" else versionTxt
+    val version = if (isDev) "1.0.0-SNAPSHOT" else versionTxt
 
 
     coordinates("com.dilivva", "google-places", version)
