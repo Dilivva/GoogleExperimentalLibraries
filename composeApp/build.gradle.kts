@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
@@ -40,8 +39,8 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.qrcode)
-            implementation(projects.places)
-            //implementation("com.dilivva.places:scanner:0.0.1")
+            //implementation(projects.places)
+            implementation(projects.signin)
         }
     }
 }
@@ -79,4 +78,25 @@ android {
         debugImplementation(libs.compose.ui.tooling)
     }
 }
+
+//tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink>().configureEach {
+//    if (outputKind != org.jetbrains.kotlin.konan.target.CompilerOutputKind.FRAMEWORK) return@configureEach
+//    val iosResources = project.layout.buildDirectory.dir("kotlin-multiplatform-resources/aggregated-resources/iosSimulatorArm64/composeResources/googleexperimentals.places.generated.resources")
+//    println("Ios: ${iosResources.get().asFile.absolutePath}")
+//    println("Out: ${outputFile.get().absolutePath}")
+//
+//    doLast {
+//        val out = providers.environmentVariable("BUILT_PRODUCTS_DIR")
+//            .zip(
+//                providers.environmentVariable("CONTENTS_FOLDER_PATH")
+//            ) { builtProductsDir, contentsFolderPath ->
+//                File("$builtProductsDir/$contentsFolderPath").canonicalPath
+//            }
+//            .flatMap {
+//                project.objects.directoryProperty().apply { set(File(it)) }
+//            }
+//        println("Copying resources... ${out.get().asFile.absolutePath}")
+//        iosResources.get().asFile.copyRecursively(out.get().asFile, true)
+//    }
+//}
 

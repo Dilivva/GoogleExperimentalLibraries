@@ -9,7 +9,8 @@
 
 **Google Libraries:**
 
-* **Google Places:** https://developers.google.com/maps/documentation/places/web-service.
+[**Google Places:**](https://github.com/Dilivva/GoogleExperimentalLibraries/tree/master/places)
+[**Google SignIn: **](https://github.com/Dilivva/GoogleExperimentalLibraries/tree/master/signin)
 
 
 ## Getting Started
@@ -29,11 +30,6 @@
     }
    }
    ```
-
-2. **Explore the API:**
-
-## Usage Example
-
 
 ## Contributing
 
