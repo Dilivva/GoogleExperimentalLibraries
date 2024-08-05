@@ -9,8 +9,8 @@
 
 **Google Libraries:**
 
-[**Google Places:**](https://github.com/Dilivva/GoogleExperimentalLibraries/tree/master/places)
-[**Google SignIn: **](https://github.com/Dilivva/GoogleExperimentalLibraries/tree/master/signin)
+[**Places**](https://github.com/Dilivva/GoogleExperimentalLibraries/tree/master/places)
+[**SignIn**](https://github.com/Dilivva/GoogleExperimentalLibraries/tree/master/signin)
 
 
 ## Getting Started
