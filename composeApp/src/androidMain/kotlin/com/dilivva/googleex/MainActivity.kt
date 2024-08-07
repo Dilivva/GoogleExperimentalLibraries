@@ -1,6 +1,7 @@
 package com.dilivva.googleex
 
 import App
+import Places
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,7 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         GoogleSignInConfig.configure("key")
         setContent {
-            App()
+            Places()
         }
     }
 }
