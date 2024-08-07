@@ -83,7 +83,7 @@ android {
 @Suppress("UnstableApiUsage")
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.S01, true)
-    val versionTxt = "1.0.0"
+    val versionTxt = "1.1.0"
     val isDev = findProperty("env")?.equals("dev") ?: false
     val version = if (isDev) "1.0.0-SNAPSHOT" else versionTxt
 
